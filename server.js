@@ -5,6 +5,7 @@ var logger = require("morgan");
 var mongoose = require("mongoose");
 var path = require("path");
 
+
 // Requiring Note and Article models
 var Note = require("./models/Note.js");
 var Article = require("./models/Article.js");
@@ -12,9 +13,8 @@ var Article = require("./models/Article.js");
 // Scraping tools
 var request = require("request");
 var cheerio = require("cheerio");
+var axios = require("axios");
 
-// Set mongoose to leverage built in JavaScript ES6 Promises
-mongoose.Promise = Promise;
 
 //Define port
 var port = process.env.PORT || 3000
@@ -40,20 +40,27 @@ app.engine("handlebars", exphbs({
 }));
 app.set("view engine", "handlebars");
 
+
+//mongoose.connect("mongodb://heroku_jmv816f9:5j1nd4taq42hi29bfm5hobeujd@ds133192.mlab.com:33192/heroku_jmv816f9");
+
+var db = process.env.MONGOD_URI || "mongodb://localhost/mongodbnyt"
+
+// Set mongoose to leverage built in JavaScript ES6 Promises
+// Connect to the Mongo DB
+mongoose.Promise = Promise;
+mongoose.connect(MONGODB_URI);
+
+
 // Database configuration with mongoose
-mongoose.connect("mongodb://localhost/monogonyt");
-var db = mongoose.connection;
-
-
-// Show any mongoose errors
-db.on("error", function(error) {
-  console.log("Mongoose Error: ", error);
+mongoose.connect(db, function(error) {
+  if (error) {
+    console.log(error);
+  }
+  else {
+    console.log("mongoose connection is successful");
+  }
 });
 
-// Once logged in to the db through mongoose, log a success message
-db.once("open", function() {
-  console.log("Mongoose connection successful.");
-});
 
 // Routes
 // ======
