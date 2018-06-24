@@ -44,6 +44,7 @@ app.set("view engine", "handlebars");
 mongoose.connect("mongodb://localhost/monogonyt");
 var db = mongoose.connection;
 
+
 // Show any mongoose errors
 db.on("error", function(error) {
   console.log("Mongoose Error: ", error);
