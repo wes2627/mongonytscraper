@@ -40,25 +40,41 @@ app.engine("handlebars", exphbs({
 }));
 app.set("view engine", "handlebars");
 
+var databaseUri = 'mongodb://localhost/mongodbnytscraper';
+
+if (process.env.MONGODB_URI) {
+
+  mongoose.connect(process.env.MONGODB_URI);
+} else {
+
+  mongoose.connect (databaseUri);
+
+}
+
+var db = mongoose.connection;
+
+db.on('error', function(err) {
+  console.log('Mongoose Error: ', err);
+});
 
 
-var db = process.env.MONGODB_URI || "mongodb://localhost/mongodbnyt"
+//var db = process.env.MONGODB_URI || "mongodb://localhost/mongodbnyt"
 
 // Set mongoose to leverage built in JavaScript ES6 Promises
 // Connect to the Mongo DB
-mongoose.Promise = Promise;
-mongoose.connect(db);
+//mongoose.Promise = Promise;
+//mongoose.connect(db);
 
 
 // Database configuration with mongoose
-mongoose.connect(db, function(error) {
-  if (error) {
-    console.log(error);
-  }
-  else {
-    console.log("mongoose connection is successful");
-  }
-});
+//mongoose.connect(db, function(error) {
+ // if (error) {
+ //   console.log(error);
+ // }
+ // else {
+ //   console.log("mongoose connection is successful");
+ // }
+//});
 
 
 // Routes
