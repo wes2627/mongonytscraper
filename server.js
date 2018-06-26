@@ -42,7 +42,7 @@ app.set("view engine", "handlebars");
 
 
 
-var db = process.env.MONGOD_URI || "mongodb://localhost/mongodbnyt"
+var db = process.env.MONGODB_URI || "mongodb://localhost/mongodbnyt"
 
 // Set mongoose to leverage built in JavaScript ES6 Promises
 // Connect to the Mongo DB
